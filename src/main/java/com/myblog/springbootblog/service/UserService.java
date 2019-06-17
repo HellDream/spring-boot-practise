@@ -14,7 +14,8 @@ public interface UserService {
      * */
     void deleteByUsername(String username);
     User getUserByUsername(String username);
-
+    boolean getUserByUsernameAndPassword(String username,String password);
     int getAllUsers();
     void deleteAllUsers();
+    boolean findUserByUsername(String username);
 }

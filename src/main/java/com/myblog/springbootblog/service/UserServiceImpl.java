@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
@@ -27,13 +29,28 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User getUserByUsername(String username){
-        return userRepository.findByUsername(username);
+        List<User> user = userRepository.findByUsername(username);
+        if(user!=null&&!user.isEmpty()) return user.get(0);
+        return null;
+    }
+
+    @Override
+    public boolean getUserByUsernameAndPassword(String username, String password) {
+        User user = userRepository.findByUsernameAndPassword(username,password);
+        return user != null;
     }
 
     @Override
     public void deleteAllUsers(){
         userRepository.deleteAll();
     }
+
+    @Override
+    public boolean findUserByUsername(String username) {
+        User user = userRepository.findUser(username);
+        return user==null;
+    }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
